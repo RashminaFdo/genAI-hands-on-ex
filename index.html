@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Modern Tech Facts</title>
+<style>
+body {
+  background-color: #222;
+  color: #eee;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  margin: 0;
+}
+
+#fact-container {
+  font-size: 24px;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+button {
+  background: linear-gradient(to bottom right, #4CAF50, #43A047);
+  color: white;
+  padding: 15px 30px;
+  border: none;
+  border-radius: 20px;
+  font-size: 18px;
+  cursor: pointer;
+  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+  position: absolute; 
+}
+
+button:hover {
+  background: linear-gradient(to bottom right, #43A047, #388E3C);
+}
+</style>
+</head>
+<body>
+
+<div id="fact-container">Click the button for a tech fact!</div>
+<button id="fact-button">Generate Fact</button>
+
+<script>
+const facts = [
+  "Smartphones are the primary means of internet access for many people worldwide.",
+  "Streaming services have largely replaced traditional television and cable for entertainment.",
+  "Social media platforms are major avenues for communication, news, and marketing.",
+  "Artificial intelligence is being used in a growing number of applications, from virtual assistants to self-driving cars.",
+  "Cloud computing allows for remote storage and access of data, changing how we work and collaborate.",
+  "E-commerce continues to grow, with online shopping becoming increasingly common.",
+  "Voice assistants like Siri and Alexa are commonplace, allowing for hands-free interaction with technology.",
+  "Virtual reality and augmented reality are becoming more sophisticated and accessible for gaming, education, and other uses.",
+  "Wearable technology, such as fitness trackers and smartwatches, is increasingly popular.",
+  "The Internet of Things (IoT) connects everyday devices to the internet, enabling greater automation and data collection."
+];
+
+const factContainer = document.getElementById('fact-container');
+const factButton = document.getElementById('fact-button');
+
+let clickAttempts = 0;
+let buttonFixed = false; 
+
+factButton.addEventListener('click', () => {
+  if (!buttonFixed) {
+    displayRandomFact();
+  }
+});
+
+document.addEventListener('mousemove', (e) => {
+  if (!buttonFixed) {
+    moveButton(e);
+  }
+});
+
+function displayRandomFact() {
+  const randomIndex = Math.floor(Math.random() * facts.length);
+  factContainer.textContent = facts[randomIndex];
+  clickAttempts++; 
+
+  if (clickAttempts >= 5) {
+    buttonFixed = true; 
+  }
+}
+
+function moveButton(e) {
+  const buttonRect = factButton.getBoundingClientRect();
+  const mouseX = e.clientX;
+  const mouseY = e.clientY;
+
+  const distance = Math.sqrt(
+    Math.pow(mouseX - (buttonRect.left + buttonRect.width / 2), 2) +
+    Math.pow(mouseY - (buttonRect.top + buttonRect.height / 2), 2)
+  );
+
+  if (distance < 50) { 
+    const moveX = (Math.random() - 0.5) * 20;
+    const moveY = (Math.random() - 0.5) * 20;
+    factButton.style.left = `${buttonRect.left + moveX}px`;
+    factButton.style.top = `${buttonRect.top + moveY}px`;
+  }
+}
+</script>
+
+</body>
+</html>
+
